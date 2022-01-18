@@ -44,9 +44,9 @@
   </a-layout>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, ref} from 'vue'
 import {
- 
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons-vue";
@@ -55,8 +55,7 @@ import AppHeader from "./header/index.vue";
 import AppLogo from "./logo/index.vue"
 import AppMenu from "./menu/menu.vue"
 import TabsContent from "./tabs-content/tabs-content.vue"
-import { ref } from "vue";
-export default {
+export default defineComponent({
   components: {
     AppHeader,
     AppLogo,
@@ -73,11 +72,11 @@ export default {
       collapsed
     };
   },
-};
+});
 </script>
 <style lang="less">
 .app-wapper {
-   display: flex;
+  //  display: flex;
   overflow: hidden;
   height: 100vh;
   
@@ -97,8 +96,8 @@ export default {
       padding: 0 16px;
     }
   }
-  .layout-content {
-    flex: none;
-  }
+  // .layout-content {
+  //   flex: none;
+  // }
 }
 </style>

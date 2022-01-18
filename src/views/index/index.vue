@@ -59,6 +59,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .version-info {
-  margin-top: 20px;
+  // margin-top: 20px;
 }
 </style>

@@ -24,14 +24,13 @@
           :key="item.name"
           @click="clickMenuItem(item.name)"
         >
-          <icon-font style="font-size: 24px" :type="item.meta.icon" />
+          <!-- <icon-font style="font-size: 24px" :type="item.meta.icon" /> -->
           <span>{{ item.meta.title }}</span>
         </a-menu-item>
       </a-sub-menu>
 
       <!-- 单独菜单 -->
-      <a-menu-item v-else :key="items.name"
-       @click="clickMenuItem(items.name)">
+      <a-menu-item v-else :key="items.name" @click="clickMenuItem(items.name)">
         <icon-font style="font-size: 24px" :type="items.meta.icon" />
         <span>{{ items.meta.title }}</span>
       </a-menu-item>
@@ -40,11 +39,11 @@
 </template>
 
 <script>
-import{ref} from 'vue'
-import IconFont from "@/assets/iconfont/icon";
-import {computed} from "vue"
-import {useStore} from "vuex"
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import  IconFont from "@/components/iconfont/icon";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   components: {
     IconFont,
@@ -56,26 +55,25 @@ export default {
     },
   },
 
-  setup(){
-    const store = useStore()
-    const router = useRouter()
-    const menus = computed(()=> store.getters.menus)
-     const selectedKeys = ref(['1']);
-    const clickMenuItem = (key) =>{
-      if(router.hasRoute(key)){
-        router.push({name:key})
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const menus = computed(() => store.getters.menus);
+    const selectedKeys = ref(["1"]);
+    const clickMenuItem = (key) => {
+      if (router.hasRoute(key)) {
+        router.push({ name: key });
       } else {
-        router.push({name:'Error403'})
+        router.push({ name: "Error403" });
       }
-      
-    }
+    };
 
     return {
       menus,
       selectedKeys,
-      clickMenuItem
-    }
-  }
+      clickMenuItem,
+    };
+  },
 };
 </script>
 <style lang='less' scoped>

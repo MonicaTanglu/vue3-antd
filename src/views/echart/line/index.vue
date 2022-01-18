@@ -11,7 +11,9 @@ import { onMounted } from 'vue'
 export default {
   setup() {
     const echartInit = () =>{
-      var myChart = echarts.init(document.getElementById("main"),'dark')
+      const mainDom = document.getElementById("main")
+      if(!mainDom) return
+      var myChart = echarts.init(mainDom,'dark')
 
       var option = {
          title: {

@@ -1,7 +1,7 @@
-import { Form, Input, Button, Layout, Menu, Row, Col,
+import { Form, Input, Button, Layout,Menu, Row, Col,
         Dropdown, Avatar, Tabs, Table, Alert, Card, List, 
         Pagination, Divider,Popconfirm, Modal, Select} from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+// import 'ant-design-vue/dist/antd.css';
 
 const components= [
     Form,

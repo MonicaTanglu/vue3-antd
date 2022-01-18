@@ -19,7 +19,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .page-container {
-  width: 100vw;
+  // width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;

@@ -90,7 +90,7 @@ const data = [
   {
     key: "1",
     name: "王大合",
-    age: 32,
+    age: null,
     group: "admin",
   },
   {
@@ -139,15 +139,20 @@ const columns = [
     slots: { customRender: "action" },
   },
 ];
-
+// interface AccountObject  {
+//   key: string,
+//   name: string,
+//   age: number,
+//   group: string
+// }
 export default {
   setup() {
     const dataSource = ref(data);
 
     const state = reactive({
       visible: false,
-      editableData: [],
-      formState: {},
+      editableData: {},
+      formState: {key: '',name: '',age: null,group: ''},
     });
 
     const edit = (key) => {

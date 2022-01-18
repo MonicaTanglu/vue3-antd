@@ -69,7 +69,7 @@ Mock.mock(
           {
             name:'demo',
             meta:{
-              icon:'icon-wallet1',
+              icon:'icon-wallet-fill',
               title:'demo'
             },
             children: [
@@ -77,7 +77,7 @@ Mock.mock(
                 name:'Table',
                 meta: {
                   title: '表格',
-                  icon: 'icon-form-fill',
+                  icon: 'icon-table',
                 },
               },
               {
@@ -92,7 +92,7 @@ Mock.mock(
           {
             name:'echart',
             meta:{
-              icon:'icon-inspection-fill',
+              icon:'icon-areachart',
               title:'echart'
             },
             children:[
@@ -100,21 +100,21 @@ Mock.mock(
                 name:'Bar',
                 meta: {
                   title: 'bar',
-                  icon: 'icon-help1',
+                  icon: 'icon-barchart',
                 },
               },
               {
                 name:'Line',
                 meta: {
                   title: 'line',
-                  icon: 'icon-help1',
+                  icon: 'icon-linechart',
                 },
               },
               {
                 name:'Pie',
                 meta: {
                   title: 'pie',
-                  icon: 'icon-help1',
+                  icon: 'icon-piechart',
                 },
               },
             ]
@@ -123,7 +123,7 @@ Mock.mock(
           {
             name:'error',
             meta:{
-              icon:'icon-gold-supplie-fill',
+              icon:'icon-error-fill',
               title:'error'
             },
             children:[
@@ -131,14 +131,14 @@ Mock.mock(
                 name:'Error403',
                 meta: {
                   title: '403',
-                  icon: 'icon-help1',
+                  icon: 'icon-error-fill',
                 },
               },
               {
                name: 'Error404',
                 meta: {
                   title: '404',
-                  icon: 'icon-help1',
+                  icon: 'icon-error-fill',
                 },
               },
              
@@ -148,7 +148,7 @@ Mock.mock(
           {
             name:'system',
             meta:{
-              icon:'icon-set1',
+              icon:'icon-setting-fill',
               title:'system'
             },
             children:[
@@ -156,14 +156,14 @@ Mock.mock(
                 name:'account',
                 meta: {
                   title: 'account',
-                  icon: 'icon-office-supplies-fill',
+                  icon: 'icon-user',
                 },
               },
               {
                 name:'group',
                 meta: {
                   title: 'group',
-                  icon: 'icon-order-fill',
+                  icon: 'icon-team',
                 },
               },
              

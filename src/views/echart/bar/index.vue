@@ -11,7 +11,9 @@ export default {
   setup() {
     //methods
     const echartInit = () => {
-      var myChart = echarts.init(document.getElementById("main"),'light');
+      let mainDom = document.getElementById("main")
+      if(!mainDom) return
+      var myChart = echarts.init(mainDom,'light');
       // 指定图表的配置项和数据
       var option = {
         title: {
