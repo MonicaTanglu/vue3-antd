@@ -13,7 +13,7 @@
         <a-tab-pane
           v-for="item in visitedRoutes"
           :key="item.fullPath"
-          :tab="item.name"
+          :tab="item.title"
         >
         </a-tab-pane>
       </a-tabs>
@@ -43,12 +43,11 @@ export default {
     watch(
       () => route.fullPath,
       (to) => {
-        console.log("tabs-content", state.visitedRoutes);
         // let routes = state.visitedRoutes;
         if (!state.visitedRoutes) return;
         if (!state.visitedRoutes.find((item) => item.fullPath === to)) {
-          const { fullPath, name, path } = route;
-          const routes = { fullPath, name, path };
+          const { fullPath, name, path, meta } = route;
+          const routes = { fullPath, name, path, title: meta.title };
           state.visitedRoutes.push(routes);
           state.activeKey = to;
         } else {

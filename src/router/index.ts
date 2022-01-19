@@ -12,6 +12,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     meta: {
       title: '首页',
       affix: true,
+      icon:'icon-home',
     },
     children: [
       {
@@ -21,47 +22,154 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: '首页',
           affix: true,
+          icon:'icon-home'
         },
       },
     ],
   },
-  // {
-  //   path: '/demo',
-  //   component: Layout,
-  //   name: 'Demo',
-  //   redirect: '/demo/table',
-  //   meta: {
-  //     title: '组件',
-  //     icon: 'apps-line',
-  //     roles: ['admin', 'editor']
-  //   },
-  //   children: [
-  //     {
-  //       path: 'table',
-  //       name: 'Table',
-  //       component: () => import('@/views/demo/table/index.vue'),
-  //       meta: {
-  //         title: '表格',
-  //         icon: 'table-2',
-  //       },
-  //     },
-  //     {
-  //       path: 'icon',
-  //       name: 'Icon',
-  //       component: () => import('@/views/demo/icon/index.vue'),
-  //       meta: {
-  //         title: '图标',
-  //         icon: 'remixicon-line',
-  //       },
-  //     },
-  //   ],
-  // },
+  {
+    path: '/demo',
+    component: Layout,
+    name: 'Demo',
+    redirect: '/demo/table',
+    meta: {
+      title: '组件',
+      icon: 'icon-wallet',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/demo/table/index.vue'),
+        meta: {
+          title: '表格',
+          icon: 'table-2',
+        },
+      },
+      {
+        path: 'icon',
+        name: 'Icon',
+        component: () => import('@/views/demo/icon/index.vue'),
+        meta: {
+          title: '图标',
+          icon: 'remixicon-line',
+        },
+      },
+    ],
+  },
   {
     path: '/login',
     name: 'login',
     component: () => import('@/views/login/Login.vue'),
     // hidden: true,
   },
+  {
+    path: '/error',
+    name: 'Error',
+    component: Layout,
+    redirect: '/error/403',
+    meta: {
+      title: '错误页',
+      icon: 'icon-error',
+    },
+    children: [
+      {
+        path: '403',
+        name: 'Error403',
+        component: () => import('@/views/error/403.vue'),
+        meta: {
+          title: '403',
+          icon: 'error-warning-line',
+        },
+      },
+      {
+        path: '404',
+        name: 'Error404',
+        component: () => import('@/views/error/404.vue'),
+        meta: {
+          title: '404',
+          icon: 'error-warning-line',
+        },
+      },
+    ],
+  },
+  {
+    path: '/echart',
+    component: Layout,
+    name: 'echart',
+    redirect: '/echart/bar',
+    meta: {
+      title: 'echart',
+      icon: 'icon-areachart',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'bar',
+        name: 'Bar',
+        component: () => import('@/views/echart/bar/index.vue'),
+        meta: {
+          title: 'bar',
+          icon: 'test-tube-line',
+          roles: ['admin', 'editor']
+        },
+      },
+      {
+        path: 'line',
+        name: 'Line',
+        component: () => import('@/views/echart/line/index.vue'),
+        meta: {
+          title: 'line',
+          icon: 'test-tube-line',
+          roles: ['admin', 'editor']
+        },
+      },
+      {
+        path: 'pie',
+        name: 'Pie',
+        component: () => import('@/views/echart/pie/index.vue'),
+        meta: {
+          title: 'pie',
+          icon: 'test-tube-line',
+        },
+      },
+    ],
+  },
+  {
+    path: '/system',
+    name: 'system',
+    component: Layout,
+    redirect: '/system/account/index.vue',
+    meta: {
+      title: 'system',
+      icon: 'icon-setting',
+      roles: ['admin', 'editor']
+    },
+    children: [
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('@/views/system/account/index.vue'),
+        meta: {
+          title: 'account',
+          icon: 'account',
+          roles: ['editor']
+        }
+
+      },
+      {
+        path: 'group',
+        name: 'group',
+        component: () => import('@/views/system/group/index.vue'),
+        meta: {
+          title: 'group',
+          icon: 'group',
+          roles: ['admin']
+        }
+      }
+    ]
+  }
 ]
 
 export const asyncRoutes = [
@@ -188,16 +296,7 @@ export const asyncRoutes = [
 // ]
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
-      path: '/', component: Layout, redirect: '/index', children: [
-        {
-          path: 'index',
-          component: () => import('@/views/index/index.vue')
-        }
-      ]
-    }
-  ],
+  routes: constantRoutes,
 })
 
 

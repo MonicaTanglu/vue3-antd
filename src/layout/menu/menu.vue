@@ -14,7 +14,7 @@
       >
         <template v-slot:title>
           <span>
-            <icon-font style="font-size: 24px" :type="items.meta.icon" />
+            <icon-font :type="items.meta.icon" />
             <span>{{ items.meta.title }}</span>
           </span>
         </template>
@@ -30,9 +30,9 @@
       </a-sub-menu>
 
       <!-- 单独菜单 -->
-      <a-menu-item v-else :key="items.name" @click="clickMenuItem(items.name)">
-        <icon-font style="font-size: 24px" :type="items.meta.icon" />
-        <span>{{ items.meta.title }}</span>
+      <a-menu-item v-else-if="items.children && items.children.length === 1" :key="items.children[0].name" @click="clickMenuItem(items.children[0].name)">
+        <icon-font v-if="items.children[0].meta && items.children[0].meta.icon"  :type="items.children[0].meta.icon" />
+        <span>{{ items.children[0].meta.title }}</span>
       </a-menu-item>
     </template>
   </a-menu>
@@ -40,10 +40,11 @@
 
 <script>
 import { ref } from "vue";
-import  IconFont from "@/components/iconfont/icon";
-import { computed } from "vue";
-import { useStore } from "vuex";
+import IconFont from "@/components/iconfont/icon";
+// import { computed } from "vue";
+// import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { constantRoutes } from "@/router/index"
 export default {
   components: {
     IconFont,
@@ -56,9 +57,10 @@ export default {
   },
 
   setup() {
-    const store = useStore();
+    // const store = useStore();
     const router = useRouter();
-    const menus = computed(() => store.getters.menus);
+    // const menus = computed(() => store.getters.menus);
+    const menus = constantRoutes
     const selectedKeys = ref(["1"]);
     const clickMenuItem = (key) => {
       if (router.hasRoute(key)) {

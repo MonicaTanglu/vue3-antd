@@ -168,7 +168,6 @@ export default {
         onFilterDropdownVisibleChange: visible => {
           if (visible) {
             setTimeout(() => {
-              console.log(searchInput.value);
               searchInput.value.focus();
             }, 0);
           }

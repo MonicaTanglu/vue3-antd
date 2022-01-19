@@ -6,7 +6,7 @@ import { setupAntd } from './ant-design-vue';
 import store from './store';
 import './style/theme.less';
 import '../mock/mock'
-import './permission'
+// import './permission'
 
 
 

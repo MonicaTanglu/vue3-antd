@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import * as IconFont from "../../../assets/iconfont/icon";
+import IconFont from "@/components/iconfont/icon";
 import { GetIconList } from "@/api/icon";
 import { reactive, toRefs, onBeforeMount } from "vue";
 export default {
@@ -47,7 +47,6 @@ export default {
       const List = await GetIconList();
 
       state.iconList = List.data.data;
-      console.log(state.iconList);
     });
 
     const queryData = (val) => {
