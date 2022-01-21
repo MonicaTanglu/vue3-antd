@@ -9,29 +9,69 @@
         <img src="@/assets/images/logo.png" />
         <h1>vue3-admin</h1>
       </header>
-      <a-form :model="form" @submit="handleSubmit" @submit.prevent>
-        <a-form-item>
+      <a-form ref="formRef" :model="formState" @submit.prevent="handleSubmit">
+        <a-form-item
+          name="username"
+          :rules="[{ required: true, message: '请输入用户名' }]"
+        >
           <a-input
-            v-model:value="form.username"
+            v-model:value="formState.username"
             size="large"
-            placeholder="Username"
+            placeholder="用户名"
           >
-            <!-- <template v-slot:prefix><user-outlined type="user" /></template> -->
+            <template v-slot:prefix><user-outlined /></template>
           </a-input>
         </a-form-item>
-        <a-form-item>
+        <a-form-item
+          name="password"
+          :rules="[{ required: true, message: '请输入密码' }]"
+        >
           <a-input
-            v-model:value="form.password"
+            v-model:value="formState.password"
             size="large"
             type="password"
-            placeholder="Password"
+            placeholder="密码"
           >
-            <!-- <template v-slot:prefix><lock-outlined type="user" /></template> -->
+            <template v-slot:prefix><lock-outlined /></template>
           </a-input>
         </a-form-item>
+
+        <a-row :gutter="0">
+          <a-col :span="16">
+            <a-form-item
+              name="captcha"
+              :rules="[{ required: true, message: '请输入验证码' }]"
+            >
+              <a-input
+                v-model:value="formState.captcha"
+                size="large"
+                placeholder="验证码"
+              >
+                <template v-slot:prefix>
+                  <smile-outlined />
+                </template>
+              </a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="8" style="text-align: right">
+            <img
+              v-if="requestCodeSuccess"
+              style="margin-top: 2px"
+              :src="randCodeImage"
+              @click="handleChangeCheckCode"
+            />
+            <img
+              v-else
+              style="margin-top: 2px"
+              src="@/assets/checkcode.png"
+              @click="handleChangeCheckCode"
+            />
+          </a-col>
+        </a-row>
+
         <a-form-item>
           <a-button type="primary" size="large" @click="handleSubmit" block>
-            Login in
+            登录
           </a-button>
         </a-form-item>
       </a-form>
@@ -42,68 +82,84 @@
 </template>
 
 <script lang="ts">
-// import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
-import { defineComponent, reactive, toRefs } from "vue";
-import { message } from "ant-design-vue";
-import { useRoute, useRouter } from "vue-router";
+import {
+  UserOutlined,
+  LockOutlined,
+  SmileOutlined,
+} from "@ant-design/icons-vue";
+import { defineComponent, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { getAction } from "@/api/api";
+interface FormState {
+  username: string;
+  password: string;
+  checkKey: string | null;
+  captcha: string;
+}
 export default defineComponent({
   name: "Login",
-  // components: {
-  //   UserOutlined,
-  //   LockOutlined,
-  // },
-
+  components: {
+    UserOutlined,
+    LockOutlined,
+    SmileOutlined,
+  },
   setup() {
-    const state = reactive({
-      form: {
-        username: "",
-        password: "",
-      },
+    const formState = reactive<FormState>({
+      username: "",
+      password: "",
+      captcha: "",
+      checkKey: null,
     });
+    // let randImgTimestamp = Date.now();
+    /**
+     * 获取验证码
+     */
+    const randCodeImage = ref<string>("");
+    const requestCodeSuccess = ref(false);
+    const handleChangeCheckCode = () => {
+      formState.checkKey = Date.now().toString();
+      formState.captcha = "";
+      getAction<string>(`/sys/randomImage/${formState.checkKey}`)
+        .then((res) => {
+          let { success, result } = res;
+          if (success) {
+            randCodeImage.value = result;
+            requestCodeSuccess.value = true;
+          } else {
+            requestCodeSuccess.value = false;
+          }
+        })
+        .catch(() => {
+          requestCodeSuccess.value = false;
+        });
+    };
 
     const store = useStore();
     const router = useRouter();
-    const route = useRoute();
-
+    // const route = useRoute();
+    const formRef = ref();
     const handleSubmit = async () => {
-      const { username, password } = state.form;
-      if (username.trim() == "" || password.trim() == "")
-        return message.warning("用户名和密码不能为空");
-      const res = await store.dispatch("user/LoginResult", state.form);
-
-      if (res.code == 200) {
-        let toPath =
-          route.query && route.query.redirect ? route.query.redirect : "/";
-        // const toPath = decodeURIComponent(route.query?.redirect || "/"); //获取登录成功后要跳转的路由。
-        message.success("登录成功！");
-        /* 获取用户信息 */
-        let tokenResult = localStorage.getItem("token");
-        const result = await store.dispatch("user/GetInfo", tokenResult);
-        const { roles } = result.data;
-        const accessedRoutes = await store.dispatch(
-          "asyncRouter/generateRoutes",
-          roles
-        );
-        accessedRoutes.forEach((item) => {
-          router.addRoute(item);
-        });
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        router.replace(decodeURIComponent(toPath)).then(() => {
-          if (route.name == "login") {
-            router.replace("/");
-          }
-        });
-      } else {
-        message.info("登录失败");
-      }
+      console.log("formRef", formRef);
+      formRef.value.validate().then(async (err) => {
+        console.log(err);
+        // if (!err) {
+          // formState.checkKey = ;
+          const res = await store.dispatch("user/Login", formState);
+          if (res) router.replace("/");
+          console.log(res, "login");
+        // }
+      });
     };
 
     /* 返回 */
     return {
-      ...toRefs(state),
+      randCodeImage,
+      requestCodeSuccess,
+      formState,
+      formRef,
       handleSubmit,
+      handleChangeCheckCode,
     };
   },
 });
@@ -111,9 +167,13 @@ export default defineComponent({
 <style lang='less' scoped>
 .login-container {
   height: 100vh;
-  background: url("~@/assets/images/login/login_bg.png");
+  // background: url("~@/assets/images/login/login_bg.png");
+  background: #f0f2f5 url("~@/assets/background.svg") no-repeat 50%;
   background-size: cover;
-  text-align: center;
+  // text-align: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   &-form {
     // width: calc(100% - 40px);
     // height: 380px;
@@ -150,9 +210,10 @@ export default defineComponent({
     }
 
     form {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
+      // display: flex;
+      // align-items: center;
+      // flex-direction: column;
+      padding: 0 40px;
       width: 100%;
       margin-top: 40px;
     }
