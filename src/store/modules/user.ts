@@ -1,6 +1,5 @@
 // import { UserInfo } from '@/api/user'
 import { getAction, postAction } from '@/api/api'
-import router, { asyncRoutes } from '@/router'
 
 interface LoginRes {
     token: string,
@@ -50,7 +49,6 @@ const user = {
     actions: {
         /* login */
         Login({ commit }, userInfo) {
-            console.log('debugger')
             return new Promise((resolve, reject) => {
                 postAction<LoginRes>('/sys/login', userInfo).then((res) => {
                     if (res.success) {
@@ -58,6 +56,7 @@ const user = {
                         localStorage.setItem('token', result.token)
                         localStorage.setItem('userInfo', JSON.stringify(result.userInfo))
                         commit('SET_USERINFO', result.userInfo)
+                        commit('SET_TOKEN', result.token)
                     }
                     resolve(res)
                 }).catch(error => {
@@ -65,30 +64,7 @@ const user = {
                 })
             })
         },
-
-        /* getUserInfo */
-        // GetInfo({ commit }, token) {
-        //     return new Promise((resolve, reject) => {
-
-        //         UserInfo(token).then(response => {
-        //             const { code, data } = response.data
-
-        //             if (code == 200) {
-        //                 commit('SET_AVATAR', data.avatar)
-        //                 commit('SET_USERNAME', data.username)
-        //                 commit('SET_ROLES', data.roles)
-        //                 commit('SET_MENUS', data.menus)
-        //                 resolve(response.data)
-        //             }
-
-
-
-        //         }).catch(error => {
-        //             reject(error)
-        //         })
-        //     })
-        // },
-        getPermissionList({ commit }) {
+        GetPermissionList({ commit }) {
             return new Promise((resolve, reject) => {
                 getAction<PermissionRes>('/sys/permission/getUserPermissionByToken').then(res => {
                     const result = res.result
@@ -110,20 +86,12 @@ const user = {
         },
 
         /* 用户登出 */
-        LogoutResult({ commit }) {
+        Logout({ commit }) {
             commit('SET_TOKEN', '')
-            commit('SET_AVATAR', '')
-            commit('SET_USERNAME', '')
-            commit('SET_ROLES', '')
-            commit('SET_MENUS', '')
-            // const Routes = router.getRoutes()
-
-            /* 清楚动态路由 */
-            asyncRoutes.forEach((item) => {
-                router.removeRoute(item.name)
-            })
+            commit('SET_PERMISSIONLIST', [])
 
             localStorage.removeItem('token')
+            localStorage.removeItem('userInfo')
 
         }
 

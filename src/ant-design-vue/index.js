@@ -1,6 +1,6 @@
 import { Form, Input, Button, Layout,Menu, Row, Col,
         Dropdown, Avatar, Tabs, Table, Alert, Card, List, 
-        Pagination, Divider,Popconfirm, Modal, Select} from 'ant-design-vue';
+        Pagination, Divider, Modal, Select} from 'ant-design-vue';
 // import 'ant-design-vue/dist/antd.css';
 
 const components= [
@@ -20,7 +20,6 @@ const components= [
     List,
     Pagination,
     Divider,
-    Popconfirm,
     Modal,
     Select
 ]

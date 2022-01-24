@@ -12,7 +12,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     meta: {
       title: '首页',
       affix: true,
-      icon:'icon-home',
+      icon: 'icon-home',
     },
     children: [
       {
@@ -22,7 +22,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: '首页',
           affix: true,
-          icon:'icon-home'
+          icon: 'icon-home'
         },
       },
     ],
@@ -59,10 +59,9 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: '/login',
+    path: '/user/login',
     name: 'login',
-    component: () => import('@/views/login/Login.vue'),
-    // hidden: true,
+    component: () => import('@/views/user/Login.vue'),
   },
   {
     path: '/error',
@@ -138,7 +137,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/system',
-    name: 'system',
+    name: '系统',
     component: Layout,
     redirect: '/system/account/index.vue',
     meta: {
@@ -167,14 +166,20 @@ export const constantRoutes: Array<RouteRecordRaw> = [
           icon: 'group',
           roles: ['admin']
         }
+      },
+      {
+        path: 'menu',
+        name: 'menu',
+        component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理',
+        }
       }
     ]
   }
 ]
 
 export const asyncRoutes = [
-
-
   {
     path: '/error',
     name: 'Error',
@@ -253,7 +258,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/system/account/index.vue',
     meta: {
-      title: 'system',
+      title: '系统管理',
       icon: 'system',
       roles: ['admin', 'editor']
     },
@@ -284,16 +289,22 @@ export const asyncRoutes = [
   }
 ]
 
-// const routes = [
-//   {
-//     path: '/', component: Layout, redirect: '/index', children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/index/index.vue')
-//       }
-//     ]
-//   }
-// ]
+export const constantRouterMap = [
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/login',
+    hidden: true,
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('@/views/user/Login.vue'),
+      }
+    ]
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(),
   routes: constantRoutes,

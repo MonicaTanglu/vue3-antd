@@ -60,7 +60,6 @@ const resultJudge = (data) => {
     }
 }
 const err = (error) => {
-    console.log(error, 'httpError')
     if (error.response) {
         const data = error.response.data
         switch (error.response.status) {
@@ -100,7 +99,7 @@ const err = (error) => {
                 // } else {
                 //     store.dispatch('showLoginForm', true)
                 // }
-                location.href = '/login'
+                location.href = '/user/login'
 
                 break;
             default:

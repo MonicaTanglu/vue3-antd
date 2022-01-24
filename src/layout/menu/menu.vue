@@ -40,15 +40,15 @@
 
 <script>
 import { ref } from "vue";
-import IconFont from "@/components/iconfont/icon";
+// import IconFont from "@/components/iconfont/icon";
 // import { computed } from "vue";
 // import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { constantRoutes } from "@/router/index"
 export default {
-  components: {
-    IconFont,
-  },
+  // components: {
+  //   IconFont,
+  // },
 
   props: {
     collapsed: {

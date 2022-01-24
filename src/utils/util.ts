@@ -12,12 +12,12 @@ export class Util {
     isURL(s) {
         return /^http[s]?:\/\/.*/.test(s)
     }
-    generateIndexRouter(data) {
+    generateIndexRouter(data): object[] {
         const indexRouter = [{
             path: '/',
             name: '首页',
             //component: () => import('@/components/layouts/BasicLayout'),
-            component: () => import('@/components/layout/index.vue'),
+            component: () => import('@/layout/index.vue'),
             meta: { title: '首页' },
             redirect: '/index',
             children: [
@@ -30,7 +30,7 @@ export class Util {
     }
     generateChildRouters(data) {
         const routers: MenuObject[] = [];
-        for (let item of data) {
+        for (const item of data) {
             let component = "";
             if (item.component.indexOf("layouts") >= 0) {
                 component = "components/" + item.component;
@@ -38,12 +38,12 @@ export class Util {
                 component = "views/" + item.component;
             }
             // eslint-disable-next-line
-            let URL = (item.meta.url || '').replace(/{{([^}}]+)?}}/g, (s1, s2) => eval(s2)) // URL支持{{ window.xxx }}占位符变量
-            if (this.isURL(URL)) {
-                item.meta.url = URL;
-            }
-            let componentPath = resolve => require(['@/' + component + '.vue'], resolve)
-            let menu: MenuObject = {
+            // let URL = (item.meta.url || '').replace(/{{([^}}]+)?}}/g, (s1, s2) => eval(s2)) // URL支持{{ window.xxx }}占位符变量
+            // if (this.isURL(URL)) {
+            //     item.meta.url = URL;
+            // }
+            const componentPath = resolve => require(['@/' + component + '.vue'], resolve)
+            const menu: MenuObject = {
                 path: item.path,
                 name: item.name,
                 redirect: item.redirect,
@@ -52,8 +52,8 @@ export class Util {
                 meta: {
                     title: item.meta.title,
                     icon: item.meta.icon,
-                    url: item.meta.url,
-                    permissionList: item.meta.permissionList,
+                    // url: item.meta.url,
+                    // permissionList: item.meta.permissionList,
                     keepAlive: item.meta.keepAlive,
                     /*update_begin author:wuxianquan date:20190908 for:赋值 */
                     internalOrExternal: item.meta.internalOrExternal,

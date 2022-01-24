@@ -126,6 +126,8 @@ export default {
 .content {
   margin: 0 16px;
   background: #fff;
+  height: 800px;
+  overflow-y: scroll;
 }
 </style>
 <style lang="less">
